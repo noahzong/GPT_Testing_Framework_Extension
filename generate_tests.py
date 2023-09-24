@@ -1,14 +1,26 @@
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 
+import argparse
 import glob
 import itertools
+import json
 import os.path
+import sys
 
-# Swap out with whatever model you'd like to test
-llm = OpenAI(max_tokens=1024)
+parser = argparse.ArgumentParser(description="Run LLM test suites")
+parser.add_argument("--model", help="Model to run all test suites against", required=True)
+parser.add_argument("--relpath", help="Path to import helpers from", required=True)
+args = parser.parse_args()
+
+sys.path.append(args.relpath)
+from helpers import get_llm
+
+llm = get_llm(args.model)
+
 # Test generation prompt
-prompt = PromptTemplate.from_template("Generate tests in Python (compatible with pytest) that produce 100% code coverage. Output only Python code and nothing else before or after. \n ```py\n{code}\n```")
+raw_prompt = json.loads(open("config.json").read())["prompt"]
+prompt = PromptTemplate.from_template(raw_prompt)
 
 for function in itertools.chain(glob.glob("functions/*.py")):
     if "__init__" in function:
