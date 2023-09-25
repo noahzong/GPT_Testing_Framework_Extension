@@ -8,14 +8,8 @@ import json
 import os.path
 import sys
 
-parser = argparse.ArgumentParser(description="Run LLM test suites")
-parser.add_argument("--model", help="Model to run all test suites against", required=True)
-parser.add_argument("--relpath", help="Path to import helpers from", required=True)
-args = parser.parse_args()
-
-sys.path.append(args.relpath)
-from helpers import get_llm
-
+from llm_test_helpers import get_llm, get_args
+args = get_args(sys.argv)
 llm = get_llm(args.model)
 
 # Test generation prompt
