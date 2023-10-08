@@ -2,3 +2,4 @@ __pycache__
 .coverage
 coverage.json
 output.json
+.DS_Store
