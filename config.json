@@ -1,8 +1,10 @@
 {
-    "name": "code-coverage",
+    "name": "translation",
     "model": "openai-latest-1024",
     "run_test": "python3 generate_tests.py",
     "run_score": "bash check_coverage.bash",
-    "tags": ["codecov", "testing", "python"],
-    "prompt": "Generate tests in Python (compatible with pytest) that produce 100% code coverage. Output only Python code and nothing else before or after. \n ```py\n{code}\n```"
+    "tags": ["testing", "translation", "python"],
+    "prompt": "Here is a sample test suite: \ndef test_function2_1(): \nassert function2(1, 2, 3) == 20.3 \ndef test_function2_2(): \nassert function2(2, 4, 6) == 33.6. \nGenerate using the provided function correct tests in Python (compatible with pytest and import pytest) that test correctness of the provided class. Output only Python code and nothing else before or after.\n ```py\n{code}\n```",
+    "translation_prompt": "Translate the provided function correct tests in C++ (compatible with catch2). At the top, make sure to include ../catch.hpp and ../functions/function(number).cpp. Remove the python import statement at the top. Output only C++ code and nothing else before or after.\n ```py\n{code}\n```"
 }
+    
